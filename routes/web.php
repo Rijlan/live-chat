@@ -16,3 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', 'ChatController@index');
+    Route::get('/messages', 'ChatController@getMessage');
+    Route::post('/messages', 'ChatController@broadcastMessage');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
